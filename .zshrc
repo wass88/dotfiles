@@ -180,7 +180,7 @@ add-zsh-hook precmd _update_vcs_info_msg
 setopt prompt_subst
 function zle-line-init zle-keymap-select {
 PROMPT="
-%{${fg[yellow]}%}%h:%~%{${reset_color}%}
+%{${fg[yellow]}%}%h %n@%m:%~%{${reset_color}%}
 %(?.%{$fg[green]%}.%{$fg[cyan]%})(%(!.#.)%(?!-__-) !;__;%) )${${KEYMAP/vicmd/|}/(main|viins)/<}%{${reset_color}%} "
 zle reset-prompt
 }
