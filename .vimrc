@@ -885,6 +885,7 @@ nnoremap <space>@  :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:
 "}}}
 "}}} 
 " window & tab "{{{
+set tabpagemax=100
 "" smooth scroll "{{{
 NeoBundle "yonchu/accelerated-smooth-scroll"
 "}}}
