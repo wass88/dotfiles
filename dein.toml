@@ -61,7 +61,7 @@ let g:quickrun_config = {
 \   },
 \}
 nmap <Space>q <Plug>(quickrun)
-nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun
+nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
 '''
 [[plugins]]
 repo = "osyo-manga/shabadou.vim"
@@ -372,7 +372,7 @@ repo = "AndrewRadev/splitjoin.vim"
 repo =  "yonchu/accelerated-smooth-scroll"
 
 # cpp
-[[pluginson]]
+[[plugins]]
 repo =  'vim-jp/cpp-vim'
 on_ft = 'cpp'
 [[plugins]]
