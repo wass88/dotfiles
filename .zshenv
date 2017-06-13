@@ -29,6 +29,11 @@ autoload -Uz zmv
 
 alias mmv='noglob zmv -W'
 
+alias bi='bundle install --path vendor/bundle'
+alias b='bundle'
+alias be='bundle exec'
+
+
 alias youdl="~/cw/python/youtube-dl/youtube_dl/__main__.py"
 function addnicolist() {
     /bin/ruby ~/cw/ruby/getmylistids.rb $1 | tee -a ~/cw/db/Temp/nicofab.txt
