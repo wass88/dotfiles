@@ -105,6 +105,8 @@ alias gds='git ds'
 alias j='cd `git rev-parse --show-toplevel`'
 alias ac='git add . && git commit '
 
+alias rb="ruby"
+alias be="bundle exec"
 
 alias mail='sed -e '"'"'1!b;s/^/To: wasss80@gmail.com\nSubject: FromOhtan\n\n/'"'"'| sendmail -t'
 
@@ -196,6 +198,7 @@ export PATH="$HOME/bin/:$PATH"
 if [ -d ${HOME}/anaconda3  ] ; then
   export PATH=$HOME/anaconda3/bin:$PATH
 fi
+export PATH=/usr/local/anaconda3/bin:"$PATH"
 
 ## neovim
 export XDG_CONFIG_HOME=$HOME/.config
