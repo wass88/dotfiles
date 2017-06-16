@@ -165,10 +165,11 @@ if [ -d $HOME/.anyenv ] ; then
 fi
 
 ## opam
-if [ -d ${HOME}/.opam/opam-init/init.zsh ] ; then
+if [ -d ${HOME}/.opam ] ; then
   eval `opam config env`
-  . ${HOME}/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 fi
+export OCAMLPARAM="_,bin-annot=1"
+export OPAMKEEPBUILDDIR=1
 
 ## rsense
 if [ -d ${HOME}/.rsense-0.3  ] ; then

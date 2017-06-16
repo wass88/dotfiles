@@ -16,12 +16,23 @@ let s:toml_file = fnamemodify(expand('<sfile>'), ':h').'/dein.toml'
 if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir, [$MYVIMRC, s:toml_file])
   call dein#load_toml(s:toml_file)
+
+  " merlin
+  if executable('ocamlmerlin')
+    let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+    call dein#add(g:opamshare . "/merlin/vim", {'lazy': 1, 'on_ft': 'ocaml'})
+  end
+
   call dein#end()
   call dein#save_state()
 endif
 if dein#check_install(['vimproc'])
   call dein#install(['vimproc'])
 endif
+
+filetype plugin indent on
+syntax enable
+
 " 不足プラグインの自動インストール
 if has('vim_starting') && dein#check_install()
   call dein#install()
@@ -238,6 +249,13 @@ set wildmode=longest:full,full
 set pumheight=15
 set isfname-==
 " TODO neocomplete
+"" OCaml
+if executable('ocamlmerlin')
+  if !exists('g:neocomplete#force_omni_input_patterns')
+      let g:neocomplete#force_omni_input_patterns = {}
+  endif
+  let g:neocomplete#force_omni_input_patterns.ocaml = '[^. *\t]\.\w*\|\h\w*|#'
+endif
 "}}}
 " Cursor and Search {{{
 set ignorecase

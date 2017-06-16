@@ -72,25 +72,17 @@ call quickrun#module#register(shabadou#make_quickrun_hook_anim(
 \   12,
 \), 1)
 '''
-[[plugins]] # Syntax check
-repo    = 'osyo-manga/vim-watchdogs'
-depends = [
-  'vim-hier',
-  'quickfixstatus',
-  'shabadou.vim',
-  'vim-quickrun',
-]
-on_event = ['FocusLost', 'CursorHold']
-hook_post_source = '''
-let s:config = {
-\    "watchdogs_checker/_" : {
-\        "hook/close_quickfix/enable_exit" : 1,
-\    },
-\}
-call extend(g:quickrun_config, s:config)
-unlet s:config
-call watchdogs#setup(g:quickrun_config)
-let g:watchdogs_check_BufWritePost_enable = 1
+[[plugins]] # Syntax Checker
+repo = "w0rp/ale"
+hook_add = '''
+
+let g:ale_sign_error = '!'
+let g:ale_sign_warning = '?'
+let g:ale_sign_info = '?'
+let g:ale_sign_style_error = '*'
+let g:ale_sign_style_warning = '*'
+
+let g:ale_lint_on_text_changed = 'never'
 '''
 [[plugins]]
 repo = "cohama/vim-hier"
