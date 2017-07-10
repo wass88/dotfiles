@@ -327,7 +327,14 @@ let g:expand_region_text_objects = {
 vmap v <Plug>(expand_region_expand)
 vmap V <Plug>(expand_region_shrink)
 """
-
+[[plugins]]
+repo = 'https://github.com/wass88/vim-textobj-sentence'
+hook_add = """
+augroup textobj_sentence
+  autocmd!
+  autocmd FileType * call textobj#sentence#init()
+augroup END
+"""
 [[plugins]] # Repeat
 repo =  "tpope/vim-repeat"
 [[plugins]] # Align text
