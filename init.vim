@@ -293,7 +293,7 @@ augroup nocr
     autocmd CursorMoved,CursorMoved * setlocal formatoptions-=ro
 augroup END
 " new line by enter
-noremap <CR> i<CR><ESC>
+nnoremap <CR> i<CR><ESC>
 " without shift
 noremap <Space>h ^
 noremap <Space>l $
