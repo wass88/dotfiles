@@ -112,13 +112,14 @@ alias mail='sed -e '"'"'1!b;s/^/To: wasss80@gmail.com\nSubject: FromOhtan\n\n/'"
 
 alias rl='rlwrap -pYellow -ic'
 
+alias d='date +%Y%m%d'
+alias dt='date +%Y%m%dT%H%M%S'
+
 ### global alias
-alias -g D='date +%Y%m%dT%H%M%S'
-alias -g DH='date +%Y%m%dT%H%M%S'
 alias -g H='date %T%H%M%S'
 alias -g G='| grep'
 alias -g L='| less -N'
-alias -g H='| head -n'
+alias -g H='| head'
 alias -g T='| tail'
 alias -g S='| sort'
 alias -g W='| wc'
