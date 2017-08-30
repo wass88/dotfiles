@@ -26,9 +26,6 @@ if dein#load_state(s:dein_dir)
   call dein#end()
   call dein#save_state()
 endif
-if dein#check_install(['vimproc'])
-  call dein#install(['vimproc'])
-endif
 
 filetype plugin indent on
 syntax enable
@@ -425,3 +422,6 @@ call submode#map('winsize', 'n', '', '<', '<C-w><')
 call submode#map('winsize', 'n', '', '+', '<C-w>-')
 call submode#map('winsize', 'n', '', '-', '<C-w>+')
 "}}}
+if filereadable(expand("~/dotfiles/nvim.local"))
+  source ~/dotfiles/nvim.local
+endif

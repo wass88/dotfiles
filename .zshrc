@@ -224,8 +224,6 @@ fi
 zplug load # --verbose
 # }}}
 # keybind# {{{
-bindkey -v
-bindkey -v '^?' backward-delete-char
 bindkey -r '^X'
 export KEYTIMEOUT=1
 autoload -Uz select-word-style

@@ -92,7 +92,8 @@ alias a='git add'
 alias gap='git add -p'
 alias gc='git commit -v'
 alias gcm='git commit -m'
-c(){git commit -m "$*"}
+c-func(){git commit -m "$*"}
+alias c='noglob c-func'
 alias gcp='git commit -p -v'
 alias gcpm='git commit -p -m'
 alias gb='git checkout -b'
@@ -101,6 +102,7 @@ alias gf='git fetch'
 alias gl='git lg'
 alias gd='git d'
 alias gds='git ds'
+alias gg='git grep'
 
 alias j='cd `git rev-parse --show-toplevel`'
 alias ac='git add . && git commit '
