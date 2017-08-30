@@ -191,6 +191,9 @@ export PATH="/usr/local/luajit/bin/:$PATH"
 ## vim
 export PATH="/usr/local/vim/bin/:$PATH"
 
+## texlive
+export PATH="/Library/TeX/texbin/:$PATH"
+
 # go
 export GOPATH=$HOME/.go
 export PATH="$GOPATH/bin/:$PATH"
@@ -207,6 +210,9 @@ export PATH=/usr/local/anaconda3/bin:"$PATH"
 
 ## neovim
 export XDG_CONFIG_HOME=$HOME/.config
+
+## rust
+export PATH="$HOME/.cargo/bin:$PATH"
 
 # }}}
 # local {{{

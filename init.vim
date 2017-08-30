@@ -75,6 +75,7 @@ let g:lisp_rainbow = 1
 
 " Colorscheme
 au ColorScheme * highlight SpellBad term=underline cterm=underline ctermfg=9 ctermbg=NONE
+au ColorScheme * highlight SpellLocal term=underline cterm=underline ctermbg=234 ctermbg=NONE
 au ColorScheme * highlight LineNr ctermfg=247 guifg=#909090
 au ColorScheme * highlight Comment ctermfg=252 guifg=#969896 cterm=BOLD gui=BOLD
 au ColorScheme * highlight SpecialKey ctermfg=247 guifg=#606060
@@ -93,6 +94,7 @@ let g:lightline = {
 \     'left': [
 \       ['mode', 'paste'],
 \       ['fugitive', 'gitgutter', 'filename',],
+\       ['ale'],
 \     ],
 \     'right': [
 \       ['lineinfo'],
@@ -114,10 +116,24 @@ let g:lightline = {
 \     'syntastic': 'SyntasticStatuslineFlag',
 \     'charcode': 'MyCharCode',
 \     'gitgutter': 'MyGitGutter',
+\     'ale': 'LinterStatus',
 \   },
 \   'separator': {'left': '', 'right': ''},
 \   'subseparator': {'left': '|', 'right': '|'}
 \}
+
+function! LinterStatus() abort
+    let l:counts = ale#statusline#Count(bufnr(''))
+
+    let l:all_errors = l:counts.error + l:counts.style_error
+    let l:all_non_errors = l:counts.total - l:all_errors
+
+    return l:counts.total == 0 ? '' : printf(
+    \   '%dW %dE',
+    \   all_non_errors,
+    \   all_errors
+    \)
+endfunction
 
 function! MyModified()
     return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
