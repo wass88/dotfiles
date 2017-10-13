@@ -251,19 +251,16 @@ function ls_abbrev() {
     if [[ ! -r $PWD ]]; then
         return
     fi
-    # -a : Do not ignore entries starting with ..
-    # -C : Force multi-column output.
-    # -F : Append indicator (one of */=>@|) to entries.
     local cmd_ls='ls'
     local -a opt_ls
-    opt_ls=('-aCF' '--color=always')
+    opt_ls=('-ACF' '--color=always')
     case "${OSTYPE}" in
         freebsd*|darwin*)
             if type gls > /dev/null 2>&1; then
                 cmd_ls='gls'
             else
                 # -G : Enable colorized output.
-                opt_ls=('-aCFG')
+                opt_ls=('-ACFG')
             fi
             ;;
     esac
@@ -331,7 +328,6 @@ setopt hist_reduce_blanks # 空白履歴削除
 setopt extended_glob # 拡張ワイルドカード表現
 setopt ignore_eof # Ctrl-Dで終了しない
 setopt correct # もしかして
-autoload -U compinit; compinit
 setopt list_packed # 補完表示を詰める
 setopt auto_param_keys # カッコ補完
 setopt auto_param_slash # ディレクトリ名の後ろのスラッシュを補完

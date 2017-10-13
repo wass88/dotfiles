@@ -74,8 +74,8 @@ let g:lisp_rainbow = 1
 au ColorScheme * highlight SpellBad term=underline cterm=underline ctermfg=9 ctermbg=NONE
 au ColorScheme * highlight SpellLocal term=underline cterm=underline ctermbg=234 ctermbg=NONE
 au ColorScheme * highlight LineNr ctermfg=247 guifg=#909090
-au ColorScheme * highlight Comment ctermfg=252 guifg=#969896 cterm=BOLD gui=BOLD
-au ColorScheme * highlight SpecialKey ctermfg=247 guifg=#606060
+au ColorScheme * highlight Comment ctermfg=228 guifg=#969896 cterm=BOLD gui=BOLD
+au ColorScheme * highlight SpecialKey ctermfg=45 guifg=#606060
 au ColorScheme * highlight NonText ctermfg=247 guifg=#606060
 au FileType coq highlight SentToCoq ctermbg=17 guibg=#000080
 

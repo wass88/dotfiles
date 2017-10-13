@@ -72,7 +72,7 @@ case "${OSTYPE}" in
     alias ls='ls --color'
     ;;
 esac
-alias ll='ls -l'                              # long list
+alias ll='ls -lA'                              # long list
 alias la='ls -A'                              # all but . and ..
 alias l='ls -CF'                              #
 alias tree='tree -CF'
@@ -132,6 +132,12 @@ alias -g V='| vim -R -'
 
 alias -g ND='*(/om[1])' # newest directory
 alias -g NF='*(.om[1])' # newest file
+
+alias dstat-full='dstat -Tclmdrn'
+alias dstat-mem='dstat -Tclm'
+alias dstat-cpu='dstat -Tclr'
+alias dstat-net='dstat -Tclnd'
+alias dstat-disk='dstat -Tcldr'
 
 # colored man
 man() {

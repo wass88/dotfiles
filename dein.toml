@@ -129,9 +129,17 @@ repo = 'haya14busa/dein-command.vim'
 repo = 'Shougo/denite.nvim'
 on_cmd = ['Denite']
 hook_add = '''
-nmap <silent> <space>z :<C-u>Denite file_mru<CR>
-nmap <silent> <space>f :<C-u>Denite file_rec<CR>
+nmap <silent> <space>z :<C-u>Denite file_mru -default-action=tabopen<CR>
+nmap <silent> <space>f :<C-u>Denite file_rec -default-action=tabopen<CR>
 nmap <silent> <space>? :<C-u>Denite line<CR>
+nmap <silent> <space>b :<C-u>Denite buffer -default-action=tabopen<CR>
+'''
+[[plugins]] # Better search
+repo = 'haya14busa/incsearch.vim'
+hook_add = '''
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
 '''
 [[plugins]] # Lookup reference K
 repo = "thinca/vim-ref"
@@ -261,8 +269,6 @@ repo =  'kana/vim-textobj-line'
 repo =  'kana/vim-textobj-indent'
 [[plugins]]
 repo =  'kana/vim-textobj-function'
-[[plugins]] # af* / if*
-repo = 'thinca/vim-textobj-between'
 on_map = [
 "<Plug>(textobj-function-i)",
 "<Plug>(textobj-function-a)",
@@ -275,6 +281,8 @@ omap aF <Plug>(textobj-function-a)
 vmap iF <Plug>(textobj-function-i)
 vmap aF <Plug>(textobj-function-a)
 '''
+[[plugins]] # af* / if*
+repo = 'thinca/vim-textobj-between'
 [[plugins]]
 repo = 'kana/vim-textobj-entire'
 hook_add = '''
