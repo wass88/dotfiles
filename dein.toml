@@ -477,10 +477,10 @@ on_ft = 'json'
 [[plugins]]
 repo =  'jvoorhis/coq.vim'
 [[plugins]]
-repo =  'eagletmt/coqtop-vim'
+repo =  'def-lkb/vimbufsync'
+[[plugins]]
+repo =  'the-lambda-church/coquille'
+#[[plugins]]
+#repo =  'eagletmt/coqtop-vim'
 # [[plugins]]
 # repo =  'vim-scripts/CoqIDE'
-# [[plugins]]
-# repo =  'def-lkb/vimbufsync'
-# [[plugins]]
-# repo =  'the-lambda-church/coquille'
