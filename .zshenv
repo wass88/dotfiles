@@ -210,12 +210,6 @@ export PATH="$GOPATH/bin/:$PATH"
 export PATH="$HOME/.bin/:$PATH"
 export PATH="$HOME/bin/:$PATH"
 
-## anaconda3
-if [ -d ${HOME}/anaconda3  ] ; then
-  export PATH=$HOME/anaconda3/bin:$PATH
-fi
-export PATH=/usr/local/anaconda3/bin:"$PATH"
-
 ## neovim
 export XDG_CONFIG_HOME=$HOME/.config
 
