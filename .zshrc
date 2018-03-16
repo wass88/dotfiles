@@ -193,6 +193,7 @@ function command_not_found_handler() {
 }
 
 REPORTTIME=3
+setopt PRINT_EXIT_VALUE
 # }}}
 # title bar# {{{
 echo -ne "\033]0;${USER}@${HOST%%.*}\007"
