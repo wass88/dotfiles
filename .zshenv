@@ -20,7 +20,7 @@ fi
 # added by travis gem
 [ -f /home/vagrant/.travis/travis.sh ] && source /home/vagrant/.travis/travis.sh
 
-alias gpp='g++ -std=c++11 -Winit-self -Wfloat-equal -Wno-sign-compare -Wunsafe-loop-optimizations -Wshadow -Wall -Wextra -D_GLIBCXX_DEBUG'
+alias gpp='g++ -std=c++11 -Winit-self -Wfloat-equal -Wno-sign-compare -Wshadow -Wall -Wextra -D_GLIBCXX_DEBUG'
 alias tmux='tmux -2'
 alias t='tmux -2'
 alias time='/usr/bin/time'

@@ -1,6 +1,7 @@
 [user]
 	name = wass80
 	email = wasss80@gmail.com
+	username = wass88
 [color]
     ui = auto
 [alias]
@@ -39,8 +40,6 @@
 	filemode = false
 	attributesfile = /home/vagrant/.gitattributes_global
 	excludesfile = /home/vagrant/.gitignore_global
-[merge]
-	ff = false
 [pull]
 	rebase = true
 [push]
@@ -48,9 +47,10 @@
 [credential]
 	helper = store
 [filter "lfs"]
-	clean = git-lfs clean %f
-	smudge = git-lfs smudge %f
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
 	required = true
+	process = git-lfs filter-process
 [url "https://"]
 	insteadOf = git://
 [diff]

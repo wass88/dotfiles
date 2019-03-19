@@ -200,13 +200,20 @@ echo -ne "\033]0;${USER}@${HOST%%.*}\007"
 # }}}
 # packages# {{{
 if [ ! -e ~/.zplug ]; then
-  curl -sL https://zplug.sh/installer | zsh
+  curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh| zsh
 fi
 source ~/.zplug/init.zsh
 
 zplug "zsh-users/zaw"
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zplug/zplug"
+
+if type "terminal-notifier" > /dev/null 2>&1; then
+    zplug "marzocchi/zsh-notify"
+    export SYS_NOTIFIER=$(which terminal-notifier)
+    export NOTIFY_COMMAND_COMPLETE_TIMEOUT=10
+    source ~/.zplug/repos/marzocchi/zsh-notify/notify.plugin.zsh
+fi
 
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 add-zsh-hook chpwd chpwd_recent_dirs
@@ -344,7 +351,7 @@ show-current-dir-as-window-name() {
     tmux set-window-option window-status-format " #I ${PWD:t} " > /dev/null
 }
 
-show-current-dir-as-window-name
+#show-current-dir-as-window-name
 add-zsh-hook chpwd show-current-dir-as-window-name
 # }}}
 
