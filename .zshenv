@@ -214,8 +214,12 @@ export PATH="$HOME/bin/:$PATH"
 export XDG_CONFIG_HOME=$HOME/.config
 
 ## rust
-export PATH="$HOME/.cargo/bin:$PATH"
-export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+if [ -f $HOME/.cargo/bin ] ; then
+  export PATH="$HOME/.cargo/bin:$PATH"
+fi
+if type -a rustc >/dev/null 2>&1; then
+  export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+fi
 
 # }}}
 # local {{{
@@ -224,3 +228,9 @@ if [ -f $HOME/dotfiles/.zshlocal ] ; then
 fi
 #}}}
 
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/admin/Documents/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/admin/Documents/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/admin/Documents/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/admin/Documents/google-cloud-sdk/completion.zsh.inc'; fi
