@@ -29,9 +29,13 @@ autoload -Uz zmv
 
 alias mmv='noglob zmv -W'
 
-alias bi='bundle install --path vendor/bundle'
 alias b='bundle'
+alias bi='bundle install --path vendor/bundle'
 alias be='bundle exec'
+
+alias n='npm'
+alias ni='npm install'
+alias nr='npm run'
 
 
 alias youdl="~/cw/python/youtube-dl/youtube_dl/__main__.py"
@@ -63,6 +67,7 @@ alias df='df -h'
 alias du='du -h'
 alias grep='grep --color'                     # show differences in colour
 alias dir='ls --color=auto --format=vertical'
+alias ls-full='ls -ld $(pwd)/*'
 alias vdir='ls --color=auto --format=long'
 case "${OSTYPE}" in
   darwin*)
@@ -98,11 +103,12 @@ alias gcp='git commit -p -v'
 alias gcpm='git commit -p -m'
 alias gb='git checkout -b'
 alias o='git checkout'
-alias gf='git fetch'
+alias f='git fetch'
 alias gl='git lg'
 alias gd='git d'
 alias gds='git ds'
 alias gg='git grep'
+alias gs='git stash'
 
 alias j='cd `git rev-parse --show-toplevel`'
 alias ac='git add . && git commit '
@@ -116,6 +122,9 @@ alias rl='rlwrap -pYellow -ic'
 
 alias d='date +%Y%m%d'
 alias dt='date +%Y%m%dT%H%M%S'
+
+alias m='make'
+alias mb='make -B'
 
 ### global alias
 alias -g H='date %T%H%M%S'

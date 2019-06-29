@@ -345,6 +345,7 @@ setopt long_list_jobs # jobsの時にプロセスidも知る
 setopt noflowcontrol # 画面更新停止(ctrl-S)させない
 setopt interactive_comments # コメントを書けるように
 setopt magic_equal_subst # =後ろの補完
+setopt noclobber # >! >>! を使おう
 
 ## ウィンドウの名前をカレントディレクトリに
 show-current-dir-as-window-name() {
