@@ -1,4 +1,54 @@
-# ailas
+# Single characters
+alias a='git add'
+alias b='bundle'
+         alias bi='bundle install --path vendor/bundle'
+         alias be='bundle exec'
+         c-func(){git commit -m "$*"}
+alias c='noglob c-func'
+alias d='docker'
+         alias dc='docker-compose'
+alias e='docker run --rm -it'
+alias f='git fetch'
+alias g='git'
+         alias ga='git add'
+         alias gap='git add -p'
+         alias gc='git commit -v'
+         alias gcm='git commit -m'
+         alias gcp='git commit -p -v'
+         alias gcpm='git commit -p -m'
+         alias gb='git checkout -b'
+         alias gop='git checkout -p'
+         alias gl='git lg'
+         alias gd='git d'
+         alias gds='git diff --staged'
+         alias gg='git grep'
+         alias gs='git stash'
+alias h='ssh'
+alias i='git add -p'
+alias j='git checkout master'
+alias k='git diff --staged'
+alias l='ls'
+        alias ll='ls -lA'
+        alias la='ls -A'
+alias n='npm'
+        alias ni='npm install'
+        alias nr='npm run'
+alias o='git checkout'
+alias p='pgrep -fl'
+alias q='tldr'
+# alias r=
+alias s='less'
+alias t='tmux'
+alias u='unar'
+alias v='vim'
+        alias vi='vim'
+# alias w=
+alias x='./a.out'
+alias y='tee | pbcopy'
+         z-func(){git commit --amend -m "$*"}
+alias z='noglob z-func'
+ 
+# Remove
 alias rm='rm -i'
 if builtin command -v trash.sh > /dev/null; then
 	alias rm='trash.sh -i'
@@ -9,34 +59,27 @@ if builtin command -v trash.sh > /dev/null; then
 fi
 
 
+# Hub
 if builtin command -v hub > /dev/null; then
   function git(){hub "$@"}
 fi
-#sudo pip install thefuck
+
+# Fuck
 if builtin command -v fuck > /dev/null; then
   eval "$(thefuck --alias f)"
 fi
 
-# added by travis gem
+# Travis gem
 [ -f /home/vagrant/.travis/travis.sh ] && source /home/vagrant/.travis/travis.sh
 
+# Misc
 alias gpp='g++ -std=c++11 -Winit-self -Wfloat-equal -Wno-sign-compare -Wshadow -Wall -Wextra -D_GLIBCXX_DEBUG'
 alias tmux='tmux -2'
-alias t='tmux -2'
 alias time='/usr/bin/time'
 function take () { mkdir -p "$@" && eval cd "\"\$$#\"";}
+
 autoload -Uz zmv
-
 alias mmv='noglob zmv -W'
-
-alias b='bundle'
-alias bi='bundle install --path vendor/bundle'
-alias be='bundle exec'
-
-alias n='npm'
-alias ni='npm install'
-alias nr='npm run'
-
 
 alias youdl="~/cw/python/youtube-dl/youtube_dl/__main__.py"
 function addnicolist() {
@@ -67,7 +110,6 @@ alias df='df -h'
 alias du='du -h'
 alias grep='grep --color'                     # show differences in colour
 alias dir='ls --color=auto --format=vertical'
-alias ls-full='ls -ld $(pwd)/*'
 alias vdir='ls --color=auto --format=long'
 case "${OSTYPE}" in
   darwin*)
@@ -77,40 +119,13 @@ case "${OSTYPE}" in
     alias ls='ls --color'
     ;;
 esac
-alias ll='ls -lA'                              # long list
-alias la='ls -A'                              # all but . and ..
-alias l='ls -CF'                              #
 alias tree='tree -CF'
 alias htree='tree -hDF'
 alias filelist='/usr/bin/tree --charset unicode -nF'
 
-alias vi='vim'
-alias v='vim'
-
-alias s='less'
 
 alias lns='ln -s'
 
-alias g='git'
-alias ga='git add'
-alias a='git add'
-alias gap='git add -p'
-alias gc='git commit -v'
-alias gcm='git commit -m'
-c-func(){git commit -m "$*"}
-alias c='noglob c-func'
-alias gcp='git commit -p -v'
-alias gcpm='git commit -p -m'
-alias gb='git checkout -b'
-alias o='git checkout'
-alias f='git fetch'
-alias gl='git lg'
-alias gd='git d'
-alias gds='git ds'
-alias gg='git grep'
-alias gs='git stash'
-
-alias j='cd `git rev-parse --show-toplevel`'
 alias ac='git add . && git commit '
 
 alias rb="ruby"
@@ -120,11 +135,7 @@ alias mail='sed -e '"'"'1!b;s/^/To: wasss80@gmail.com\nSubject: FromOhtan\n\n/'"
 
 alias rl='rlwrap -pYellow -ic'
 
-alias d='date +%Y%m%d'
 alias dt='date +%Y%m%dT%H%M%S'
-
-alias m='make'
-alias mb='make -B'
 
 ### global alias
 alias -g H='date %T%H%M%S'
@@ -212,7 +223,6 @@ export PATH="/usr/local/vim/bin/:$PATH"
 export PATH="/Library/TeX/texbin/:$PATH"
 
 # go
-export GOPATH=$HOME/.go
 export PATH="$GOPATH/bin/:$PATH"
 
 ## general
@@ -221,6 +231,10 @@ export PATH="$HOME/bin/:$PATH"
 
 ## neovim
 export XDG_CONFIG_HOME=$HOME/.config
+if type nvim >/dev/null 2>&1; then
+  alias vim='nvim'
+fi 
+
 
 ## rust
 if [ -f $HOME/.cargo/bin ] ; then
@@ -236,7 +250,6 @@ if [ -f $HOME/dotfiles/.zshlocal ] ; then
   source $HOME/dotfiles/.zshlocal
 fi
 #}}}
-
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/admin/Documents/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/admin/Documents/google-cloud-sdk/path.zsh.inc'; fi

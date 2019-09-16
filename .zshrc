@@ -243,6 +243,8 @@ bindkey "^N" down-line-or-history
 bindkey '^R' history-incremental-pattern-search-backward
 bindkey '^S' history-incremental-pattern-search-forward
 bindkey "^Xg" list-expand
+bindkey "^F" forward-word
+bindkey "^B" backward-word
 bindkey -s "^Z" "fg\n"
 show_buffer_stack() {
   POSTDISPLAY="
