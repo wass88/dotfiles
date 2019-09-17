@@ -29,7 +29,7 @@ if is-at-least 4.3.10; then
     # git のときはステージしているかどうかを表示
     zstyle ':vcs_info:git:*' formats '[%b]' '%c%u %m'
     zstyle ':vcs_info:git:*' actionformats '[%b]' '%c%u %m' '<!%a>'
-    zstyle ':vcs_info:git:*' check-for-changes true
+    zstyle ':vcs_info:git:*' check
     zstyle ':vcs_info:git:*' stagedstr "+"    # %c で表示する文字列
     zstyle ':vcs_info:git:*' unstagedstr "-"  # %u で表示する文字列
 fi
@@ -208,13 +208,6 @@ zplug "zsh-users/zaw"
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zplug/zplug"
 
-if type "terminal-notifier" > /dev/null 2>&1; then
-    zplug "marzocchi/zsh-notify"
-    export SYS_NOTIFIER=$(which terminal-notifier)
-    export NOTIFY_COMMAND_COMPLETE_TIMEOUT=10
-    source ~/.zplug/repos/marzocchi/zsh-notify/notify.plugin.zsh
-fi
-
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 add-zsh-hook chpwd chpwd_recent_dirs
 zstyle ':chpwd:*' recent-dirs-max 5000
@@ -243,8 +236,6 @@ bindkey "^N" down-line-or-history
 bindkey '^R' history-incremental-pattern-search-backward
 bindkey '^S' history-incremental-pattern-search-forward
 bindkey "^Xg" list-expand
-bindkey "^F" forward-word
-bindkey "^B" backward-word
 bindkey -s "^Z" "fg\n"
 show_buffer_stack() {
   POSTDISPLAY="
@@ -347,14 +338,13 @@ setopt long_list_jobs # jobsの時にプロセスidも知る
 setopt noflowcontrol # 画面更新停止(ctrl-S)させない
 setopt interactive_comments # コメントを書けるように
 setopt magic_equal_subst # =後ろの補完
-setopt noclobber # >! >>! を使おう
 
 ## ウィンドウの名前をカレントディレクトリに
 show-current-dir-as-window-name() {
     tmux set-window-option window-status-format " #I ${PWD:t} " > /dev/null
 }
 
-#show-current-dir-as-window-name
+show-current-dir-as-window-name
 add-zsh-hook chpwd show-current-dir-as-window-name
 # }}}
 
@@ -369,10 +359,3 @@ PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
 if [ -d ${HOME}/.opam/opam-init/init.zsh ] ; then
   . ${HOME}/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 fi
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/admin/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/admin/Downloads/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/admin/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/admin/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
-export PATH="/usr/local/opt/gettext/bin:$PATH"
