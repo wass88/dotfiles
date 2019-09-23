@@ -32,8 +32,6 @@
     pforce = !git push --force-with-lease origin `git rev-parse --abbrev-ref HEAD`
     br = branch
     brmd ="!f () { git checkout $1; git branch --merged|egrep -v '\\*|develop|master'|xargs git branch -d; };f"
-[help]
-	autocorrect = 1
 [core]
 	editor = vim
 	pager = LESS=-R less
