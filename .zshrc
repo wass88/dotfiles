@@ -325,7 +325,7 @@ zstyle ':filter-select' case-insensitive yes
 
 bindkey '^R' zaw-history
 bindkey '^O' zaw-cdr
-bindkey '^Y' zaw-process
+bindkey -r '^l'
 
 # }}}
 # action option# {{{
@@ -349,14 +349,14 @@ setopt interactive_comments # コメントを書けるように
 setopt magic_equal_subst # =後ろの補完
 setopt noclobber # >! >>! を使おう
 
-## ウィンドウの名前をカレントディレクトリに
-show-current-dir-as-window-name() {
-    tmux set-window-option window-status-format " #I ${PWD:t} " > /dev/null
-}
-
-#show-current-dir-as-window-name
-add-zsh-hook chpwd show-current-dir-as-window-name
-# }}}
+### ウィンドウの名前をカレントディレクトリに
+#show-current-dir-as-window-name() {
+#    tmux set-window-option window-status-format " #I ${PWD:t} " > /dev/null
+#}
+#
+##show-current-dir-as-window-name
+#add-zsh-hook chpwd show-current-dir-as-window-name
+## }}}
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -376,3 +376,11 @@ if [ -f '/Users/admin/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/admin/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/admin/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
 export PATH="/usr/local/opt/gettext/bin:$PATH"
+
+export WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
+
+# Created by `userpath` on 2021-09-26 08:58:34
+export PATH="$PATH:/Users/admin/.local/bin"
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh" || true
+

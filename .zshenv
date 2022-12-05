@@ -1,3 +1,83 @@
+# path {{{
+setopt no_global_rcs
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin":$PATH
+
+if builtin command -v direnv > /dev/null; then
+  eval "$(direnv hook zsh)"
+fi
+
+# anyenv
+if [ -d $HOME/.anyenv ] ; then
+    export PATH="$HOME/.anyenv/bin:$PATH"
+    eval "$(anyenv init -)"
+    for D in `ls $HOME/.anyenv/envs`
+    do
+      export PATH="$HOME/.anyenv/envs/$D/shims:$PATH"
+    done
+fi
+
+## opam
+if [ -d ${HOME}/.opam ] ; then
+  eval `opam config env`
+fi
+export OCAMLPARAM="_,bin-annot=1"
+export OPAMKEEPBUILDDIR=1
+
+## rsense
+if [ -d ${HOME}/.rsense-0.3  ] ; then
+    export RSENSE_HOME=$HOME/.rsense-0.3
+fi
+
+## cabal
+if [ -d ${HOME}/.cabal  ] ; then
+  export PATH=$HOME/.cabal/bin:$PATH
+fi
+
+## luajit
+export PATH="/usr/local/luajit/bin/:$PATH"
+
+## vim
+export PATH="/usr/local/vim/bin/:$PATH"
+
+## texlive
+export PATH="/Library/TeX/texbin/:$PATH"
+
+## go
+export PATH="$HOME/go/bin:$PATH"
+
+## general
+export PATH="$HOME/.bin/:$PATH"
+
+## neovim
+export XDG_CONFIG_HOME=$HOME/.config
+if type nvim >/dev/null 2>&1; then
+  alias vim='nvim'
+fi 
+
+## rust
+export PATH="$HOME/.cargo/bin:$PATH"
+
+if type -a rustc >/dev/null 2>&1; then
+  export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+fi
+
+export PATH="$HOME/bin/flutter/bin:$PATH"
+
+# }}}
+# local {{{
+if [ -f $HOME/dotfiles/.zshlocal ] ; then
+  source $HOME/dotfiles/.zshlocal
+fi
+#}}}
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/admin/Documents/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/admin/Documents/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/admin/Documents/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/admin/Documents/google-cloud-sdk/completion.zsh.inc'; fi
+
+
+
 # Single characters
 alias a='git add'
 alias b='bundle'
@@ -5,6 +85,8 @@ alias b='bundle'
          alias be='bundle exec'
          c-func(){git commit -m "$*"}
 alias c='noglob c-func'
+alias ca='git commit --amend --no-edit'
+alias cx='chmod +x'
 alias d='docker'
          alias dc='docker-compose'
 alias e='docker run --rm -it'
@@ -23,6 +105,9 @@ alias g='git'
          alias gds='git diff --staged'
          alias gg='git grep'
          alias gs='git stash'
+	 alias gr='git rebase'
+	 alias gri='git rebase -i HEAD~~~'
+	 alias grii='git rebase -i HEAD~~~~~'
 alias h='ssh'
 alias i='git add -p'
 alias j='git checkout master'
@@ -38,6 +123,10 @@ alias p='pgrep -fl'
 alias q='tldr'
 # alias r=
 alias s='less'
+if builtin command -v bat > /dev/null; then
+	alias s='bat -p'
+	export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+fi
 alias t='tmux'
 alias u='unar'
 alias v='vim'
@@ -47,7 +136,12 @@ alias x='./a.out'
 alias y='tee | pbcopy'
          z-func(){git commit --amend -m "$*"}
 alias z='noglob z-func'
- 
+
+alias doc='cd ~/Documents'
+alias dow='cd ~/Downloads'
+
+alias -- -="cd -"
+
 # Remove
 alias rm='rm -i'
 if builtin command -v trash.sh > /dev/null; then
@@ -58,11 +152,6 @@ if builtin command -v trash.sh > /dev/null; then
 	export MAXTRASHSIZE=`echo $MAXTRASHBOXSIZE "*" 0.1|bc -l|cut -d. -f1`
 fi
 
-
-# Hub
-if builtin command -v hub > /dev/null; then
-  function git(){hub "$@"}
-fi
 
 # Fuck
 if builtin command -v fuck > /dev/null; then
@@ -137,6 +226,13 @@ alias rl='rlwrap -pYellow -ic'
 
 alias dt='date +%Y%m%dT%H%M%S'
 
+if builtin command -v exa > /dev/null; then
+  alias l='exa -lahF'
+  alias ls='exa'
+  alias la='exa -a'
+fi
+
+
 ### global alias
 alias -g H='date %T%H%M%S'
 alias -g G='| grep'
@@ -159,6 +255,33 @@ alias dstat-cpu='dstat -Tclr'
 alias dstat-net='dstat -Tclnd'
 alias dstat-disk='dstat -Tcldr'
 
+alias C='> >(while read line; do echo -e "\e[01;32m$line\e[0m"; done) 2> >(while read line; do echo -e "\e[01;31m$line\e[0m" >&2; done)'
+
+function watch() {
+  cmd=$1
+  files=${@[@]:1}
+  zsh <<SHELL
+    set -v
+    while true; do
+      echo - - - - - - - - - - - - - - - - - - - - - - - - - -
+      sh -c "{ $cmd ;} ; echo ; echo Exited; while true; do sleep 60; done; echo Unfortunatelly END" &
+      pid=$!
+      echo PID $pid
+      prog=$(cat <<PROG
+      echo !!!
+      kill $pid
+PROG
+)
+      echo PROG ": $prog :"
+      trap "$prog" HUP
+      jobs
+      fg
+    done
+SHELL
+  pid=$!
+  fswatch -o $files | xargs -n1 -I % sh -c "kill -HUP $pid"
+}
+
 # colored man
 man() {
   env \
@@ -177,82 +300,3 @@ HISTSIZE=1000000
 SAVEHIST=1000000
 HISTFILE=~/.zsh_history # 保存先
 
-# path {{{
-setopt no_global_rcs
-OLD_PATH=$PATH
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-
-if builtin command -v direnv > /dev/null; then
-  eval "$(direnv hook zsh)"
-fi
-
-# anyenv
-if [ -d $HOME/.anyenv ] ; then
-    export PATH="$HOME/.anyenv/bin:$PATH"
-    eval "$(anyenv init -)"
-    for D in `ls $HOME/.anyenv/envs`
-    do
-      export PATH="$HOME/.anyenv/envs/$D/shims:$PATH"
-    done
-fi
-
-## opam
-if [ -d ${HOME}/.opam ] ; then
-  eval `opam config env`
-fi
-export OCAMLPARAM="_,bin-annot=1"
-export OPAMKEEPBUILDDIR=1
-
-## rsense
-if [ -d ${HOME}/.rsense-0.3  ] ; then
-    export RSENSE_HOME=$HOME/.rsense-0.3
-fi
-
-## cabal
-if [ -d ${HOME}/.cabal  ] ; then
-  export PATH=$HOME/.cabal/bin:$PATH
-fi
-
-## luajit
-export PATH="/usr/local/luajit/bin/:$PATH"
-
-## vim
-export PATH="/usr/local/vim/bin/:$PATH"
-
-## texlive
-export PATH="/Library/TeX/texbin/:$PATH"
-
-# go
-export PATH="$GOPATH/bin/:$PATH"
-
-## general
-export PATH="$HOME/.bin/:$PATH"
-export PATH="$HOME/bin/:$PATH"
-
-## neovim
-export XDG_CONFIG_HOME=$HOME/.config
-if type nvim >/dev/null 2>&1; then
-  alias vim='nvim'
-fi 
-
-
-## rust
-if [ -f $HOME/.cargo/bin ] ; then
-  export PATH="$HOME/.cargo/bin:$PATH"
-fi
-if type -a rustc >/dev/null 2>&1; then
-  export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
-fi
-
-# }}}
-# local {{{
-if [ -f $HOME/dotfiles/.zshlocal ] ; then
-  source $HOME/dotfiles/.zshlocal
-fi
-#}}}
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/admin/Documents/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/admin/Documents/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/admin/Documents/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/admin/Documents/google-cloud-sdk/completion.zsh.inc'; fi
