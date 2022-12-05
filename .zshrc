@@ -246,6 +246,14 @@ bindkey "^Xg" list-expand
 bindkey "^F" forward-word
 bindkey "^B" backward-word
 bindkey -s "^Z" "fg\n"
+# C-cをC-yで回復
+trapint() {
+  if zle; then
+    zle kill-whole-line
+    zle reset-prompt
+  fi
+}
+trap trapint INT
 show_buffer_stack() {
   POSTDISPLAY="
   stack: $LBUFFER"

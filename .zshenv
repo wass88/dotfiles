@@ -2,10 +2,6 @@
 setopt no_global_rcs
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin":$PATH
 
-if builtin command -v direnv > /dev/null; then
-  eval "$(direnv hook zsh)"
-fi
-
 # anyenv
 if [ -d $HOME/.anyenv ] ; then
     export PATH="$HOME/.anyenv/bin:$PATH"
