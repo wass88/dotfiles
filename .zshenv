@@ -58,6 +58,7 @@ if type -a rustc >/dev/null 2>&1; then
 fi
 
 export PATH="$HOME/bin/flutter/bin:$PATH"
+export PATH="$PATH":"$HOME/.pub-cache/bin"
 
 # }}}
 # local {{{
@@ -76,34 +77,46 @@ if [ -f '/Users/admin/Documents/google-cloud-sdk/completion.zsh.inc' ]; then . '
 
 # Single characters
 alias a='git add'
+alias ac='git add . && git commit -v'
+      alias a.='git add -A'
 alias b='bundle'
          alias bi='bundle install --path vendor/bundle'
          alias be='bundle exec'
          c-func(){git commit -m "$*"}
 alias c='noglob c-func'
-alias ca='git commit --amend --no-edit'
-alias cx='chmod +x'
+      alias ca='git commit --amend --no-edit'
+      cf(){git commit --fixup ${1-HEAD}}
+      alias cx='chmod +x'
 alias d='docker'
          alias dc='docker-compose'
 alias e='docker run --rm -it'
 alias f='git fetch'
+      fb(){git fetch origin $1:$1}
+      fm(){fb $(gdefault)}
 alias g='git'
          alias ga='git add'
          alias gap='git add -p'
+         alias gan='git add -NA'
          alias gc='git commit -v'
+         alias crr="cargo run --relase"
          alias gcm='git commit -m'
          alias gcp='git commit -p -v'
          alias gcpm='git commit -p -m'
-         alias gb='git checkout -b'
+         alias gb='git branch'
+         alias gb-rename='git branch -m'
+         alias gb-delete='git branch -D'
          alias gop='git checkout -p'
          alias gl='git lg'
          alias gd='git d'
+         alias gp='git push --force-with-lease'
          alias gds='git diff --staged'
          alias gg='git grep'
          alias gs='git stash'
-	 alias gr='git rebase'
-	 alias gri='git rebase -i HEAD~~~'
-	 alias grii='git rebase -i HEAD~~~~~'
+         alias gdefault="git remote show origin | head -n 5 | sed -n '/HEAD branch/s/.*: //p'"
+         gi(){git rebase --autosquash -i --keep-base ${1-$(gdefault)}}
+         alias gr='git rebase'
+         alias gri='git rebase -i'
+         grm(){git rebase $(gdefault)}
 alias h='ssh'
 alias i='git add -p'
 alias j='git checkout master'
@@ -111,10 +124,14 @@ alias k='git diff --staged'
 alias l='ls'
         alias ll='ls -lA'
         alias la='ls -A'
+alias m='make'
 alias n='npm'
         alias ni='npm install'
         alias nr='npm run'
 alias o='git checkout'
+    alias ob='git checkout -b'
+    om(){git checkout $(gdefault) -b $@}
+    alias o-='git checkout -'
 alias p='pgrep -fl'
 alias q='tldr'
 # alias r=
@@ -137,6 +154,14 @@ alias doc='cd ~/Documents'
 alias dow='cd ~/Downloads'
 
 alias -- -="cd -"
+
+# Two letters
+alias py=python
+alias rb=ruby
+alias wg=wget
+alias cr="cargo run"
+alias crr="cargo run --relase"
+alias ct="cargo test"
 
 # Remove
 alias rm='rm -i'
@@ -211,10 +236,6 @@ alias filelist='/usr/bin/tree --charset unicode -nF'
 
 alias lns='ln -s'
 
-alias ac='git add . && git commit '
-
-alias rb="ruby"
-alias be="bundle exec"
 
 alias mail='sed -e '"'"'1!b;s/^/To: wasss80@gmail.com\nSubject: FromOhtan\n\n/'"'"'| sendmail -t'
 

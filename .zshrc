@@ -213,6 +213,8 @@ if type "terminal-notifier" > /dev/null 2>&1; then
     export SYS_NOTIFIER=$(which terminal-notifier)
     export NOTIFY_COMMAND_COMPLETE_TIMEOUT=10
     source ~/.zplug/repos/marzocchi/zsh-notify/notify.plugin.zsh
+    zstyle ':notify:*' error-title "失敗"
+    zstyle ':notify:*' success-title "成功"
 fi
 
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
@@ -249,14 +251,23 @@ bindkey -s "^Z" "fg\n"
 # C-cをC-yで回復
 trapint() {
   if zle; then
-    zle kill-whole-line
+    if [[ $BUFFER == "" ]]; then
+# NOTE: POSTDISPLAY is read-only on trap
+#      POSTDISPLAY="
+#      stack: $LBUFFER"
+      zle get-line
+    else
+      zle kill-whole-line
+      zle yank
+      zle send-break
+    fi
     zle reset-prompt
   fi
 }
 trap trapint INT
 show_buffer_stack() {
-  POSTDISPLAY="
-  stack: $LBUFFER"
+#  POSTDISPLAY="
+#  stack: $LBUFFER"
   zle push-line-or-edit
 }
 zle -N show_buffer_stack
@@ -333,6 +344,7 @@ zstyle ':filter-select' case-insensitive yes
 
 bindkey '^R' zaw-history
 bindkey '^O' zaw-cdr
+bindkey '^B' zaw-git-recent-branches
 bindkey -r '^l'
 
 # }}}
@@ -392,3 +404,7 @@ export PATH="$PATH:/Users/admin/.local/bin"
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh" || true
 
+# Copliot
+if type -a github-copilot-cli >/dev/null 2>&1; then
+    eval "$(github-copilot-cli alias -- "$0")"
+fi
