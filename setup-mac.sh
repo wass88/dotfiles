@@ -20,6 +20,9 @@ defaults write com.apple.dock autohide -bool true
 # TrackPad
 defaults write -g com.apple.mouse.scaling 3.6
 
+# Reset Localization
+rm Applications/.localized Desktop/.localized Documents/.localized Downloads/.localized Library/.localized Movies/.localized Music/.localized Pictures/.localized Public/.localized
+
 brew install gh
 brew install --cask google-chrome
 brew install --cask google-japanese-ime
@@ -30,6 +33,7 @@ brew install --cask appcleaner
 brew install --cask raycast
 brew install --cask slack
 brew install mas
+brew install terminal-notifier
 
 brew install mise
 eval "$(mise activate zsh)"
