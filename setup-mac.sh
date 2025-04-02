@@ -28,6 +28,7 @@ brew install --cask google-chrome
 brew install --cask google-japanese-ime
 brew install --cask zoom
 brew install --cask 1password
+brew install --cask 1password-cli
 brew install --cask bettertouchtool
 brew install --cask appcleaner
 brew install --cask raycast
@@ -43,6 +44,7 @@ mise use -g rust@latest
 
 
 brew install --cask docker
+brew install docker-compose
 brew install --cask warp
 brew install --cask ngrok
 brew install git

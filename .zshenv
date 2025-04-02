@@ -317,3 +317,4 @@ HISTSIZE=1000000
 SAVEHIST=1000000
 HISTFILE=~/.zsh_history # 保存先
 
+eval $(/opt/homebrew/bin/brew shellenv)
