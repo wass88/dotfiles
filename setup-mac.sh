@@ -19,6 +19,8 @@ defaults write com.apple.dock launchanim -bool false
 defaults write com.apple.dock autohide -bool true
 # TrackPad
 defaults write -g com.apple.mouse.scaling 3.6
+# No Power Sound
+defaults write com.apple.PowerChime ChimeOnNoHardware -bool true
 
 # Reset Localization
 rm Applications/.localized Desktop/.localized Documents/.localized Downloads/.localized Library/.localized Movies/.localized Music/.localized Pictures/.localized Public/.localized
@@ -33,6 +35,7 @@ brew install --cask bettertouchtool
 brew install --cask appcleaner
 brew install --cask raycast
 brew install --cask slack
+brew install --cask visual-studio-code
 brew install mas
 brew install terminal-notifier
 
@@ -51,3 +54,4 @@ brew install git
 brew install awscli
 brew install --cask xcodes
 brew install --cask iterm2
+brew install --cask cursor

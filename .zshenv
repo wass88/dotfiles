@@ -2,6 +2,7 @@
 setopt no_global_rcs
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin":$PATH
 
+
 # anyenv
 if [ -d $HOME/.anyenv ] ; then
     export PATH="$HOME/.anyenv/bin:$PATH"
@@ -74,49 +75,68 @@ if [ -f '/Users/admin/Documents/google-cloud-sdk/path.zsh.inc' ]; then . '/Users
 if [ -f '/Users/admin/Documents/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/admin/Documents/google-cloud-sdk/completion.zsh.inc'; fi
 
 
-
 # Single characters
 alias a='git add'
-alias ac='git add . && git commit -v'
+      alias ac='git add -A && git status -sb && c'
       alias a.='git add -A'
+      alias am='git add -A && git status -sb && git commit --amend --no-edit'
 alias b='bundle'
-         alias bi='bundle install --path vendor/bundle'
-         alias be='bundle exec'
-         c-func(){git commit -m "$*"}
+      alias bi='bundle install --path vendor/bundle'
+      alias be='bundle exec'
+      c-func(){git commit -m "$*"}
 alias c='noglob c-func'
       alias ca='git commit --amend --no-edit'
-      cf(){git commit --fixup ${1-HEAD}}
+      cam-func(){git commit --amend -m "$*"}
+      alias cam='noglob cam-func'
+      cf(){ git commit --fixup ${1-HEAD} }
       alias cx='chmod +x'
+alias crr="cargo run --relase"
 alias d='docker'
          alias dc='docker-compose'
+         alias dce='docker-compose exec'
 alias e='docker run --rm -it'
 alias f='git fetch'
       fb(){git fetch origin $1:$1}
-      fm(){fb $(gdefault)}
+      fm(){fb $(git-default-branch)}
 alias g='git'
-         alias ga='git add'
-         alias gap='git add -p'
-         alias gan='git add -NA'
-         alias gc='git commit -v'
-         alias crr="cargo run --relase"
-         alias gcm='git commit -m'
-         alias gcp='git commit -p -v'
-         alias gcpm='git commit -p -m'
-         alias gb='git branch'
-         alias gb-rename='git branch -m'
-         alias gb-delete='git branch -D'
-         alias gop='git checkout -p'
-         alias gl='git lg'
-         alias gd='git d'
-         alias gp='git push --force-with-lease'
-         alias gds='git diff --staged'
-         alias gg='git grep'
-         alias gs='git stash'
-         alias gdefault="git remote show origin | head -n 5 | sed -n '/HEAD branch/s/.*: //p'"
-         gi(){git rebase --autosquash -i --keep-base ${1-$(gdefault)}}
-         alias gr='git rebase'
-         alias gri='git rebase -i'
-         grm(){git rebase $(gdefault)}
+      alias ga='git add'
+      alias gap='git add -p'
+      alias gan='git add -NA'
+      alias gc='git commit -v'
+      alias gca='git commit -v -a'
+      alias gcm='git commit -m'
+      alias gcp='git commit -p -v'
+      alias gcpm='git commit -p -m'
+      alias gb='git branch'
+      alias gb-rename='git branch -m'
+      alias gb-delete='git branch -D'
+      alias gop='git checkout -p'
+      alias gl='git lg'
+      alias gd='git d'
+      alias gp='git push --force-with-lease'
+      alias gpr='gp && pr'
+      alias gds='git diff --staged'
+      alias gg='git grep'
+      alias gs='git stash'
+      gi(){git rebase --autosquash -i --keep-base ${1-$(git-default-branch)}}
+      alias gr='git rebase'
+      alias grc='git rebase --continue'
+      alias gra='git rebase --abort'
+      alias gri='git rebase -i'
+      grm(){git rebase $(git-default-branch)}
+      alias grs='git reset --soft'
+      alias pr="gh pr create -w"
+
+# git tools
+git-default-branch(){ git remote show origin | head -n 5 | sed -n '/HEAD branch/s/.*: //p'i }
+git-current-branch(){ git rev-parse --abbrev-ref HEAD }
+git-current-remote(){ echo ${$(git rev-parse --abbrev-ref HEAD@{upstream})%%/*} }
+git-rename-remote(){ local REMOTE=$(git-current-remote); git push $REMOTE :$(git-current-branch) && git branch -m $1 && git push -u $REMOTE $1 }
+git-rename(){ git branch -m $1 }
+git-delete(){ git branch -D $1 }
+git-change(){ local BRANCH=$(git-current-branch); git switch -d $1 && git switch -C $BRANCH }
+ 
+
 alias h='ssh'
 alias i='git add -p'
 alias j='git checkout master'
@@ -130,7 +150,9 @@ alias n='npm'
         alias nr='npm run'
 alias o='git checkout'
     alias ob='git checkout -b'
-    om(){git checkout $(gdefault) -b $@}
+    om(){git checkout $(git-default-branch)}
+    mb(){fm && git checkout $(git-default-branch) -b $@}
+    mm(){fm && om $@}
     alias o-='git checkout -'
 alias p='pgrep -fl'
 alias q='tldr'
@@ -149,19 +171,21 @@ alias x='./a.out'
 alias y='tee | pbcopy'
          z-func(){git commit --amend -m "$*"}
 alias z='noglob z-func'
-
 alias doc='cd ~/Documents'
 alias dow='cd ~/Downloads'
-
 alias -- -="cd -"
 
 # Two letters
 alias py=python
 alias rb=ruby
 alias wg=wget
-alias cr="cargo run"
-alias crr="cargo run --relase"
-alias ct="cargo test"
+alias cr="cargo run --release"
+alias crd="cargo run"
+alias ct="cargo test -v -- --nocapture"
+alias ctd="cargo test"
+alias vc="code -n ."
+alias cu=cursor
+
 
 # Remove
 alias rm='rm -i'
@@ -318,3 +342,4 @@ SAVEHIST=1000000
 HISTFILE=~/.zsh_history # 保存先
 
 eval $(/opt/homebrew/bin/brew shellenv)
+eval "$(mise activate zsh)"

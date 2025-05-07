@@ -1,5 +1,5 @@
 [user]
-	name = wass80
+	name = wass88
 	email = wasss80@gmail.com
 	username = wass88
 [color]
@@ -32,12 +32,13 @@
     pforce = !git push --force-with-lease origin `git rev-parse --abbrev-ref HEAD`
     br = branch
     brmd ="!f () { git checkout $1; git branch --merged|egrep -v '\\*|develop|master'|xargs git branch -d; };f"
+	reset = "!f() {\n  for arg in \"$@\"; do\n    if [[ \"$arg\" == \"--hard\" ]]; then\n      printf \"error: git reset --hard is disabled globally.\\n\" >&2\n      return 1\n    fi\n  done\n  git -c alias.reset= reset \"$@\"\n}; f"
 [core]
 	editor = vim
 	pager = LESS=-R less
 	filemode = false
 	attributesfile = /home/vagrant/.gitattributes_global
-	excludesfile = /home/vagrant/.gitignore_global
+	excludesfile = /Users/wass/.gitignore_global
 [pull]
 	rebase = true
 [push]
